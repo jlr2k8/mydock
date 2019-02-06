@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  web:
+    image: joshlrogers/apache
+    working_dir: /var/www/html
+    environment:
+      - VIRTUAL_HOST=${PROJECT_LOCAL_DOMAIN}
+    expose:
+      - 80
+    networks:
+      - mynet
+    container_name: "${PROJECT}"
+    restart: always
+    tty: true
+
+networks:
+  mynet:
+    external: true

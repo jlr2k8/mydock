@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  redis:
+    image: joshlrogers/redis
+    ports:
+      - 6379:6379
+    networks:
+      - mynet
+    container_name: "${PROJECT}"
+    restart: always
+    tty: true
+
+networks:
+  mynet:
+    external: true

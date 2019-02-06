@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - mynet
+    container_name: "adminer"
+
+networks:
+  mynet:
+    external: true

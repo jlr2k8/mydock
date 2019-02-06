@@ -1,0 +1,98 @@
+#!/bin/bash
+
+MYDOCK_ROOT=${BASH_SOURCE%/*}/..
+COMMAND="${1}"
+PROJECT="${2}"
+
+# Ensure env directory exists
+mkdir -p "${MYDOCK_ROOT}/env"
+
+ENV="${MYDOCK_ROOT}/env/.${PROJECT}"
+
+function mydockHelp() {
+    echo "
+        Usage: mydock <command> <project>
+
+        Commands:
+        ---------------------"
+
+    for FILE in ${MYDOCK_ROOT}/bin/commands/*.sh; do
+        echo "        *    $(basename ${FILE} .sh)"
+    done;
+
+    echo
+
+    return 0
+}
+
+function showProjects()
+{
+    echo "        Available projects:"
+    echo "        ---------------------"
+
+    for D in $(ls -d ${MYDOCK_ROOT}/projects/*); do
+        echo "        *    $(basename ${D})"
+    done
+
+    return 0
+}
+
+# Grab all includes
+for FILE in ${MYDOCK_ROOT}/bin/inc/*.sh; do
+    . "${FILE}"
+done;
+
+# Globals - exported for docker-compose
+export PROJECT_LOCAL_DOMAIN="${PROJECT}.local"
+export PROJECT="${PROJECT}"
+export MYDOCK_ROOT="${MYDOCK_ROOT}"
+
+while getopts "h" OPT; do
+    case "${OPT}" in
+        h|*)
+            mydockHelp
+            exit 0
+            ;;
+    esac
+done
+
+if [[ -z "${COMMAND}" ]]; then
+    mydockHelp
+    exit 1
+fi
+
+# Check for valid sub-command
+if [[ ! -x "${MYDOCK_ROOT}/bin/commands/${COMMAND}.sh" ]]; then
+    echo
+    echo "Fatal - '${COMMAND}.sh' is not a valid command file..."
+    echo
+    mydockHelp
+    exit 1
+fi
+
+if [[ -z "${PROJECT}" ]]; then
+    echo
+    echo "Project not specified...."
+    echo
+    showProjects
+    echo
+    exit 1
+fi
+
+if [[ ! -d "${MYDOCK_ROOT}/projects/${PROJECT}/" ]]; then
+    echo
+    echo "Project '${MYDOCK_ROOT}/projects/${PROJECT}/' not found!"
+    echo
+    showProjects
+    echo
+    exit 1
+fi
+
+# Get the environment configuration file. If it doesn't exist, then we'll interactively create one
+getEnv "${ENV}"
+
+# Pass on the parameters to the intended sub-command
+if [[ -x "${MYDOCK_ROOT}/bin/commands/${COMMAND}.sh" ]]; then
+    shift 1
+    . ${MYDOCK_ROOT}/bin/commands/${COMMAND}.sh ${@}
+fi

@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  mynet:
+    image: jwilder/nginx-proxy
+    container_name: mynet
+    ports:
+    - "80:80"
+    volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+    - mynet
+    restart: always
+
+networks:
+  mynet:
+    external: true

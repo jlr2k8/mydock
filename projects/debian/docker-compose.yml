@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  debian:
+    image: joshlrogers/debian
+    container_name: debian
+    restart: always
+    tty: true
+
+volumes:
+  data:
