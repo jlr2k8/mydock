@@ -3,6 +3,9 @@
 # Create network
 docker network create mynet > /dev/null 2>&1
 
+# Local domain name
+export PROJECT_DOMAIN="${PROJECT}.local"
+
 # Start up the proxy
 buildRunProxy
 
