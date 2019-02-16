@@ -23,7 +23,7 @@ while getopts "h" OPT; do
     esac
 done
 
-PROJECT_DESTROY_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/destroy.sh"
+PROJECT_DESTROY_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/stop.sh"
 
 if [[ -x "${PROJECT_DESTROY_FILE}" ]]; then
     shift 1

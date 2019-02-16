@@ -5,7 +5,7 @@ services:
     image: joshlrogers/apache
     working_dir: /var/www/html
     environment:
-      - VIRTUAL_HOST=${PROJECT_LOCAL_DOMAIN}
+      - VIRTUAL_HOST=${PROJECT_DOMAIN}
     expose:
       - 80
     networks:

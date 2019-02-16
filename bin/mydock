@@ -43,7 +43,6 @@ for FILE in ${MYDOCK_ROOT}/bin/inc/*.sh; do
 done;
 
 # Globals - exported for docker-compose
-export PROJECT_LOCAL_DOMAIN="${PROJECT}.local"
 export PROJECT="${PROJECT}"
 export MYDOCK_ROOT="${MYDOCK_ROOT}"
 
