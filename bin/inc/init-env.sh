@@ -31,7 +31,17 @@ function getEnv()
 {
     local ENV="${1}"
 
-    if [[ ! -f "${ENV}" ]]; then
+    . ${ENV}
+
+    # Required env setting - if empty/missing, prompt for it
+    if [[ -z "${DOCKER_REPO}" ]]; then
+        echo
+        echo "Please provide the docker repository name:"
+        read -p "Docker Repo: " DOCKER_REPO
+    fi
+
+    # Not required - used for projects where the code is actively worked on and evaluated in real-time
+    if [[ -z "${WORKING_COPY+set}" ]]; then
         echo
         echo "Please provide the working copy for your application (or skip by leaving blank):"
         read -p "Path: " WORKING_COPY
@@ -43,19 +53,18 @@ function getEnv()
 
             return 1
         fi
+    fi
 
-        echo
-        echo "Please provide the docker repository name:"
-        read -p "Docker Repo: " DOCKER_REPO
-
+    # Not required. For web projects, this is available to set the host port in docker-compose
+    if [[ -z "${HOST_PORT+set}" ]]; then
         echo
         echo "Please provide the host port (or skip by leaving blank):"
         read -p "Host port: " HOST_PORT
 
         setEnv "${ENV}" "${WORKING_COPY}" "${DOCKER_REPO}" "${HOST_PORT}"
-    else
-        . ${ENV}
     fi
+
+    . ${ENV}
 
     export WORKING_COPY="${WORKING_COPY}"
     export DOCKER_REPO="${DOCKER_REPO}"
