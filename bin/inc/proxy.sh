@@ -5,7 +5,8 @@ function buildRunProxy()
     docker-compose \
         --file "${MYDOCK_ROOT}/utilities/proxy/docker-compose.yml" \
         up \
-        -d
+        -d \
+        --force-recreate
 
     return $?
 }

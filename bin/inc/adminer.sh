@@ -6,7 +6,7 @@ function buildRunAdminer()
 
     docker-compose --file "${MYDOCK_ROOT}/utilities/adminer/docker-compose.yml" \
         up \
-        --detach \
+        -d \
         --force-recreate
 
     return $?

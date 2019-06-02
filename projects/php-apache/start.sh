@@ -15,4 +15,5 @@ addHost "${PROJECT_LOCAL_DOMAIN}"
 docker-compose \
     --file "${PROJECT_COMPOSE_FILE}" \
     up \
-    -d
+    -d \
+    --force-recreate

@@ -4,8 +4,9 @@ MYDOCK_ROOT=${BASH_SOURCE%/*}/..
 COMMAND="${1}"
 PROJECT="${2}"
 
-# Ensure env directory exists
+# Ensure env and projects/custom directory exists
 mkdir -p "${MYDOCK_ROOT}/env"
+mkdir -p "${MYDOCK_ROOT}/projects/custom"
 
 ENV="${MYDOCK_ROOT}/env/.${PROJECT}"
 
@@ -31,6 +32,10 @@ function showProjects()
     echo "        ---------------------"
 
     for D in $(ls -d ${MYDOCK_ROOT}/projects/*); do
+        echo "        *    $(basename ${D})"
+    done
+
+    for D in $(ls -d ${MYDOCK_ROOT}/projects/custom/*); do
         echo "        *    $(basename ${D})"
     done
 
@@ -78,9 +83,9 @@ if [[ -z "${PROJECT}" ]]; then
     exit 1
 fi
 
-if [[ ! -d "${MYDOCK_ROOT}/projects/${PROJECT}/" ]]; then
+if [[ ! -d "${MYDOCK_ROOT}/projects/${PROJECT}/" ]] && [[ ! -d "${MYDOCK_ROOT}/projects/custom/${PROJECT}/" ]]; then
     echo
-    echo "Project '${MYDOCK_ROOT}/projects/${PROJECT}/' not found!"
+    echo "Project '${PROJECT}' not found in projects/ or projects/custom/"
     echo
     showProjects
     echo

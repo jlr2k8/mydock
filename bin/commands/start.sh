@@ -28,14 +28,22 @@ echo "Starting ${PROJECT}"
 
 PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/docker-compose.yml"
 
+if [[ ! -e "${PROJECT_COMPOSE_FILE}" ]]; then
+    PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/custom/${PROJECT}/docker-compose.yml"
+fi
+
 PROJECT_START_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/start.sh"
+
+if [[ ! -e "${PROJECT_START_FILE}" ]]; then
+    PROJECT_START_FILE="${MYDOCK_ROOT}/projects/custom/${PROJECT}/start.sh"
+fi
 
 if [[ -x "${PROJECT_START_FILE}" ]]; then
     shift 1
     . "${PROJECT_START_FILE}" $@
 else
     echo
-    echo "Missing start.sh in ${MYDOCK_ROOT}/projects/${PROJECT}"
+    echo "Missing start.sh for ${PROJECT}"
 
     exit 1
 fi

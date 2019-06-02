@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [[ -z "${DOCKER_REPO}" ]]; then
+    echo
+    echo "Please provide the docker repository name:"
+    read -p "Docker Repo: " DOCKER_REPO
+
+    echo "DOCKER_REPO=${DOCKER_REPO}" >> ${ENV}
+fi
+
+
 REDIS_PORT='6379'
 REDIS_CONFIG_FILE='/etc/redis/6379.conf'
 REDIS_LOG_FILE='/var/log/redis_6379.log'

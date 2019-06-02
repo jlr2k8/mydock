@@ -2,3 +2,4 @@
 /env/.*
 /node_modules*
 **templates_c
+/projects/custom/*

@@ -53,11 +53,13 @@ RUN cd httpd-2.4.29 \
 	&& make \
 	&& make install clean
 
+RUN mkdir -p /usr/local/apache2/conf/inc/vhosts
+
 COPY conf/ /usr/local/apache2/conf/
 
 RUN ldconfig
 
-ENV PACKAGES_DEBIAN_RM=' \
+ENV PACKAGES_DEBIAN_RM=" \
 	make \
 	build-essential \
 	gcc \
@@ -70,7 +72,7 @@ ENV PACKAGES_DEBIAN_RM=' \
 	libxml2-utils \
 	libxml2-dev \
 	procps \
-'
+"
 
 RUN apt-get purge -y --auto-remove ${PACKAGE_DEBIAN_RM} \
     && rm -rf /var/lib/apt/lists/*
