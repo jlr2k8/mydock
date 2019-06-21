@@ -32,6 +32,7 @@ if [[ -z "${HOST_PORT}" ]]; then
 fi
 
 # Exporting for docker-compose
+export WORKING_COPY="${WORKING_COPY}"
 export PROJECT_DOMAIN="${PROJECT_DOMAIN}"
 export HOST_PORT="${HOST_PORT}"
 

@@ -3,7 +3,7 @@ version: '3.4'
 services:
   web:
     build:
-      context: "${MYDOCK_ROOT}/projects/custom/${PROJECT}/web"
+      context: "${MYDOCK_ROOT}/projects/${PROJECT}/web"
     volumes:
         - "${WORKING_COPY}:/usr/local/apache2/htdocs"
     image: joshlrogers/php-apache
@@ -19,7 +19,7 @@ services:
 
   db:
     build:
-      context: "${MYDOCK_ROOT}/projects/custom/${PROJECT}/db"
+      context: "${MYDOCK_ROOT}/projects/${PROJECT}/db"
     volumes:
       - data:/var/lib/mysql
     environment:
