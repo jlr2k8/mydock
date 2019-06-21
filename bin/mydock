@@ -32,6 +32,10 @@ function showProjects()
     echo "        ---------------------"
 
     for D in $(ls -d ${MYDOCK_ROOT}/projects/*); do
+        if [[ "$(basename ${D})" = 'custom' ]]; then
+            continue;
+        fi
+
         echo "        *    $(basename ${D})"
     done
 

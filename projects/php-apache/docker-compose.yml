@@ -3,7 +3,7 @@ version: '3.4'
 services:
   web:
     image: joshlrogers/php-apache
-    working_dir: /var/www/html
+    working_dir: /usr/local/apache2/htdocs
     environment:
       - VIRTUAL_HOST=${PROJECT_DOMAIN}
     expose:

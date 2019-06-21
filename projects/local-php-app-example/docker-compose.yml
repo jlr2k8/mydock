@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  web:
+    build:
+      context: "${MYDOCK_ROOT}/projects/custom/${PROJECT}/web"
+    volumes:
+        - "${WORKING_COPY}:/usr/local/apache2/htdocs"
+    image: joshlrogers/php-apache
+    environment:
+      - VIRTUAL_HOST=${PROJECT_DOMAIN}
+    expose:
+      - 80
+    networks:
+      - mynet
+    container_name: "${PROJECT}-web"
+    restart: always
+    tty: true
+
+  db:
+    build:
+      context: "${MYDOCK_ROOT}/projects/custom/${PROJECT}/db"
+    volumes:
+      - data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    restart: always
+    networks:
+      - mynet
+    container_name: "${PROJECT}-db"
+
+volumes:
+  data:
+
+networks:
+  mynet:
+    external: true

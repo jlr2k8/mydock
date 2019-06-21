@@ -4,35 +4,23 @@ function getEnv()
 {
     local ENV="${1}"
 
+    if [[ -z "${ENV}" ]]; then
+        echo
+        echo "Fatal - getEnv() requires the environment's name"
+        echo
+
+        exit 1
+    fi
+
     if [[ -f "${ENV}" ]]; then
-        . ${ENV}
+        . "${ENV}"
     else
         echo
-        echo "The environment file (${ENV}) does not yet exist..."
+        echo "The environment file (${ENV}) does not yet exist... creating now..."
         echo
+
+        touch "${ENV}"
     fi
-
-    # Not required - used for projects where the code is actively worked on and evaluated in real-time
-    if [[ -z "${WORKING_COPY+set}" ]]; then
-        echo
-        echo "Please provide the working copy for your application (or skip by leaving blank):"
-        read -p "Path: " WORKING_COPY
-
-        if [[ ! -d "${WORKING_COPY}" ]] && [[ ! -z "${WORKING_COPY}" ]]; then
-            echo
-            echo "'${WORKING_COPY}' is an invalid working copy location! Please try again..."
-            getEnv "${ENV}"
-
-            return 1
-        else
-            echo "WORKING_COPY=${WORKING_COPY}" >> ${ENV}
-        fi
-    fi
-
-    . ${ENV}
-
-    export WORKING_COPY="${WORKING_COPY}"
-    export DOCKER_REPO="${DOCKER_REPO}"
 
     return 0
 }

@@ -18,17 +18,17 @@ if [[ -z "${HOST_PORT+set}" ]]; then
     echo "Please provide the host port (or skip by leaving blank):"
     read -p "Host port: " HOST_PORT
 
-    setEnvItem HOST_PORT ${HOST_PORT}
+    setEnvItem HOST_PORT "${HOST_PORT}"
 fi
-
-# Exporting for docker-compose
-export PROJECT_DOMAIN="${PROJECT_DOMAIN}"
-export HOST_PORT="${HOST_PORT}"
 
 # Default to port 80 if left blank
 if [[ -z "${HOST_PORT}" ]]; then
     HOST_PORT=80
 fi
+
+# Exporting for docker-compose
+export PROJECT_DOMAIN="${PROJECT_DOMAIN}"
+export HOST_PORT="${HOST_PORT}"
 
 # Start up the proxy
 buildRunProxy
