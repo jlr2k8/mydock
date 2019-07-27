@@ -9,6 +9,7 @@ services:
     - "${HOST_PORT_SSL}:443"
     volumes:
     - /var/run/docker.sock:/tmp/docker.sock:ro
+    - "${HOST_CERT_DIR}:/etc/nginx/certs"
     networks:
     - mynet
     restart: always

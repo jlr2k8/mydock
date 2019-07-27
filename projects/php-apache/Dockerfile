@@ -42,6 +42,7 @@ RUN echo >> /usr/local/apache2/conf/httpd.conf \
         --with-mysqli \
         --with-pdo-mysql \
         --enable-opcache=no \
+        --enable-bcmath \
     && make clean \
     && make \
     && make install clean \
