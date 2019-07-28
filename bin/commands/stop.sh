@@ -30,7 +30,7 @@ if [[ -x "${PROJECT_DESTROY_FILE}" ]]; then
     . "${PROJECT_DESTROY_FILE}" $@
 else
     echo
-    echo "This project does not appear to have an official stop script (${PROJECT_DESTROY_FILE}. Attempting 'docker stop ${PROJECT_NAME}'"
+    echo "This project does not appear to have an official stop script (${PROJECT_DESTROY_FILE}. Attempting 'docker stop ${PROJECT}'"
     echo
     docker stop ${PROJECT}
 
