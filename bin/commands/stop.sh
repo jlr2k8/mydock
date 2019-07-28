@@ -32,7 +32,7 @@ else
     echo
     echo "This project does not appear to have an official stop script (${PROJECT_DESTROY_FILE}. Attempting 'docker stop ${PROJECT_NAME}'"
     echo
-    docker stop ${PROJECT_NAME}
+    docker stop ${PROJECT}
 
     if [[ $? != 0 ]]; then
         echo
