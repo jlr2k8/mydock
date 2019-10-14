@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:buster
 
 ENV PACKAGES_DEBIAN=" \
     autoconf \
@@ -23,9 +23,9 @@ ENV PACKAGES_DEBIAN=" \
     wget \
 "
 
-ENV PCRE_VERSION='8.38'
-ENV OPENSSL_VERSION='1.0.2n'
-ENV CURL_VERSION='7.58.0'
+ENV PCRE_VERSION='8.43'
+ENV OPENSSL_VERSION='1.1.1d'
+ENV CURL_VERSION='7.66.0'
 
 RUN apt update \
     && apt install -y ${PACKAGES_DEBIAN}

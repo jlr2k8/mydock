@@ -1,8 +1,13 @@
 FROM joshlrogers/debian
 
-RUN wget https://zlib.net/zlib-1.2.11.tar.gz \
-	&& tar xzf zlib-1.2.11.tar.gz \
-	&& cd zlib-1.2.11 \
+ENV APACHE_VERSION='2.4.41'
+ENV APR_VERSION='1.7.0'
+ENV APR_UTIL_VERSION='1.6.1'
+ENV ZLIB_VERSION='1.2.11'
+
+RUN wget https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz \
+	&& tar xzf zlib-${ZLIB_VERSION}.tar.gz \
+	&& cd zlib-${ZLIB_VERSION} \
 	&& ./configure --prefix=/usr \
 	&& make clean \
 	&& make \
@@ -10,34 +15,34 @@ RUN wget https://zlib.net/zlib-1.2.11.tar.gz \
     && cd .. \
 	&& rm zlib*.tar.gz
 
-RUN wget https://archive.apache.org/dist/httpd/httpd-2.4.29.tar.bz2 \
-	&& tar xjf httpd-2.4.29.tar.bz2 \
+RUN wget https://archive.apache.org/dist/httpd/httpd-${APACHE_VERSION}.tar.bz2 \
+	&& tar xjf httpd-${APACHE_VERSION}.tar.bz2 \
 	&& rm httpd*.tar.bz2
 
-RUN cd httpd-2.4.29/srclib \
-	&& wget https://archive.apache.org/dist/apr/apr-1.6.3.tar.bz2 \
-	&& wget https://archive.apache.org/dist/apr/apr-util-1.6.1.tar.bz2 \
-	&& tar xjf apr-1.6.3.tar.bz2 \
-	&& mv apr-1.6.3 apr
+RUN cd httpd-${APACHE_VERSION}/srclib \
+	&& wget https://archive.apache.org/dist/apr/apr-${APR_VERSION}.tar.bz2 \
+	&& wget https://archive.apache.org/dist/apr/apr-util-${APR_UTIL_VERSION}.tar.bz2 \
+	&& tar xjf apr-${APR_VERSION}.tar.bz2 \
+	&& mv apr-${APR_VERSION} apr
 
-RUN cd httpd-2.4.29/srclib/apr \
+RUN cd httpd-${APACHE_VERSION}/srclib/apr \
 	&& ./configure \
 	&& make \
 	&& make clean \
 	&& make install
 
-RUN cd httpd-2.4.29/srclib/ \
-    && tar xjf apr-util-1.6.1.tar.bz2 \
-    && mv apr-util-1.6.1 apr-util \
+RUN cd httpd-${APACHE_VERSION}/srclib/ \
+    && tar xjf apr-util-${APR_UTIL_VERSION}.tar.bz2 \
+    && mv apr-util-${APR_UTIL_VERSION} apr-util \
     && rm apr*.tar.bz2
 
-RUN cd httpd-2.4.29/srclib/apr-util \
+RUN cd httpd-${APACHE_VERSION}/srclib/apr-util \
 	&& ./configure --with-apr=../apr \
 	&& make clean \
 	&& make \
 	&& make install
 
-RUN cd httpd-2.4.29 \
+RUN cd httpd-${APACHE_VERSION} \
 	&& ./configure \
 		--enable-mods-static='speling rewrite so' \
 		--enable-ssl \

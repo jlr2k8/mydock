@@ -25,6 +25,10 @@ done
 
 PROJECT_DESTROY_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/stop.sh"
 
+if [[ ! -e "${PROJECT_DESTROY_FILE}" ]]; then
+    PROJECT_DESTROY_FILE="${MYDOCK_ROOT}/projects/custom/${PROJECT}/stop.sh"
+fi
+
 if [[ -x "${PROJECT_DESTROY_FILE}" ]]; then
     shift 1
     . "${PROJECT_DESTROY_FILE}" $@

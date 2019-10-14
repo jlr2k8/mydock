@@ -7,9 +7,11 @@ ARG REDIS_EXECUTABLE
 
 FROM joshlrogers/debian
 
-RUN wget http://download.redis.io/releases/redis-3.2.11.tar.gz \
-	&& tar xzf redis-3.2.11.tar.gz \
-	&& cd redis-3.2.11 \
+ENV REDIS_VERSION='5.0.5'
+
+RUN wget http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz \
+	&& tar xzf redis-${REDIS_VERSION}.tar.gz \
+	&& cd redis-${REDIS_VERSION} \
 	&& make clean \
 	&& make \
 	&& make install \

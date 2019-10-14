@@ -1,11 +1,16 @@
 FROM joshlrogers/apache
 
+ENV PHP_VERSION='7.3.10'
+ENV JPEG_VERSION='v9c'
+ENV PNG_VERSION='1.6.34'
+
+
 RUN apt update \
     && apt install -y libgd3 libgd-dev
 
 ## LibJPEG
-RUN    wget http://www.ijg.org/files/jpegsrc.v9c.tar.gz --output-document /tmp/jpegsrc.v9c.tar.gz \
-    && cd /tmp && tar xzf jpegsrc.v9c.tar.gz \
+RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-document /tmp/jpegsrc.${JPEG_VERSION}.tar.gz \
+    && cd /tmp && tar xzf jpegsrc.${JPEG_VERSION}.tar.gz \
     && cd jpeg-9c \
     && ./configure \
     && make clean \
@@ -14,9 +19,9 @@ RUN    wget http://www.ijg.org/files/jpegsrc.v9c.tar.gz --output-document /tmp/j
     && cd
 
 ## LibPNG
-RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-1.6.34.tar.gz --output-document /tmp/libpng-1.6.34.tar.gz \
-    && cd /tmp && tar xzf libpng-1.6.34.tar.gz \
-    && cd libpng-1.6.34 \
+RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-${PNG_VERSION}.tar.gz --output-document /tmp/libpng-${PNG_VERSION}.tar.gz \
+    && cd /tmp && tar xzf libpng-${PNG_VERSION}.tar.gz \
+    && cd libpng-${PNG_VERSION} \
     && ./configure \
     && make clean \
     && make \
@@ -26,9 +31,9 @@ RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-1.6.34.tar.g
 # PHP
 RUN echo >> /usr/local/apache2/conf/httpd.conf \
     && echo '# LoadModule php7_module modules/libphp7.so' >> /usr/local/apache2/conf/httpd.conf \
-    && wget http://php.net/get/php-7.2.16.tar.bz2/from/this/mirror --output-document /tmp/php-7.2.16.tar.bz2 \
-    && tar xjf /tmp/php-7.2.16.tar.bz2 --directory /tmp \
-    && cd /tmp/php-7.2.16 \
+    && wget http://php.net/get/php-${PHP_VERSION}.tar.bz2/from/this/mirror --output-document /tmp/php-${PHP_VERSION}.tar.bz2 \
+    && tar xjf /tmp/php-${PHP_VERSION}.tar.bz2 --directory /tmp \
+    && cd /tmp/php-${PHP_VERSION} \
     && ./configure \
         --with-zlib \
         --with-gd \
