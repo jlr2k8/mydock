@@ -1,12 +1,11 @@
 FROM joshlrogers/apache
 
-ENV PHP_VERSION='7.3.10'
-ENV JPEG_VERSION='v9c'
-ENV PNG_VERSION='1.6.34'
-
+ARG PHP_VERSION
+ARG JPEG_VERSION='v9c'
+ARG PNG_VERSION='1.6.34'
 
 RUN apt update \
-    && apt install -y libgd3 libgd-dev
+    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev
 
 ## LibJPEG
 RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-document /tmp/jpegsrc.${JPEG_VERSION}.tar.gz \

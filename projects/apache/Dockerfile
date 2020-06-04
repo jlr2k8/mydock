@@ -1,9 +1,9 @@
 FROM joshlrogers/debian
 
-ENV APACHE_VERSION='2.4.41'
-ENV APR_VERSION='1.7.0'
-ENV APR_UTIL_VERSION='1.6.1'
-ENV ZLIB_VERSION='1.2.11'
+ARG APACHE_VERSION
+ARG APR_VERSION='1.7.0'
+ARG APR_UTIL_VERSION='1.6.1'
+ARG ZLIB_VERSION='1.2.11'
 
 RUN wget https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz \
 	&& tar xzf zlib-${ZLIB_VERSION}.tar.gz \
@@ -61,6 +61,7 @@ RUN cd httpd-${APACHE_VERSION} \
 RUN mkdir -p /usr/local/apache2/conf/inc/vhosts
 
 COPY conf/ /usr/local/apache2/conf/
+COPY path.sh /etc/profile.d/path.sh
 
 RUN ldconfig
 
