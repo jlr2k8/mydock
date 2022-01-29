@@ -5,7 +5,7 @@ ARG JPEG_VERSION='v9c'
 ARG PNG_VERSION='1.6.34'
 
 RUN apt update \
-    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev
+    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev libzip-dev libzip5
 
 ## LibJPEG
 RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-document /tmp/jpegsrc.${JPEG_VERSION}.tar.gz \
@@ -48,6 +48,7 @@ RUN echo >> /usr/local/apache2/conf/httpd.conf \
         --with-bz2 \
         --enable-opcache=yes \
         --enable-bcmath \
+        --with-zip \
     && make clean \
     && make \
     && make install clean \

@@ -8,10 +8,6 @@ if [[ -z "${DOCKER_REPO}" ]]; then
     echo "DOCKER_REPO=${DOCKER_REPO}" >> ${ENV}
 fi
 
-echo
-echo "Checking latest PHP version"
-echo
-
 which jq > /dev/null
 
 if [[ $? != 0 ]]; then
@@ -20,6 +16,9 @@ if [[ $? != 0 ]]; then
 
   exit
 else
+  echo "Checking latest PHP version"
+  echo
+
   PHP_VERSION=$(curl -s "https://www.php.net/releases/index.php?json&version=8&max=1" | jq "keys[]" | tr -d '"')
 
   echo "Latest PHP 8: ${PHP_VERSION}"

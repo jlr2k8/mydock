@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 ENV PACKAGES_DEBIAN=" \
     autoconf \
@@ -23,14 +23,14 @@ ENV PACKAGES_DEBIAN=" \
     wget \
 "
 
-ENV PCRE_VERSION='8.43'
-ENV OPENSSL_VERSION='1.1.1g'
-ENV CURL_VERSION='7.71.1'
+ENV PCRE_VERSION='8.45'
+ENV OPENSSL_VERSION='1.1.1m'
+ENV CURL_VERSION='7.81.0'
 
 RUN apt update \
     && apt install -y ${PACKAGES_DEBIAN}
 
-RUN wget https://ftp.pcre.org/pub/pcre/pcre-${PCRE_VERSION}.tar.bz2 \
+RUN wget -O pcre-${PCRE_VERSION}.tar.bz2 https://sourceforge.net/projects/pcre/files/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2/download \
     && tar xjf pcre-${PCRE_VERSION}.tar.bz2 \
     && cd pcre-${PCRE_VERSION} \
     && ./configure \
