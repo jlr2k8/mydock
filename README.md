@@ -16,6 +16,21 @@ codebases' working copies so you can see live changes as you develop your web ap
 
 ### Usage
 
+#### Full Environment Cleanup:
+The following commands will blow away all containers, images and volumes:
+
+1) Stop and remove all containers:
+
+``docker rm $(docker ps -aq) --force``
+
+2) Remove all associated images:
+
+``docker rmi $(docker images -q) --force``
+
+3) Remove all volumes:
+
+``docker volume rm $(docker volume ls -q) --force``
+
 ## Projects
 
 ### Official joshlrogers repositories

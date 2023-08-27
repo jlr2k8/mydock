@@ -6,7 +6,7 @@ services:
       context: "${MYDOCK_ROOT}/projects/${PROJECT}/web"
     volumes:
         - "${WORKING_COPY}:/usr/local/apache2/htdocs"
-    image: joshlrogers/php-apache
+    image: joshlrogers/php7-apache
     environment:
       - VIRTUAL_HOST=${PROJECT_DOMAIN}
     expose:

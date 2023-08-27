@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: joshlrogers/php-apache
+    image: joshlrogers/php7-apache
     working_dir: /usr/local/apache2/htdocs
     environment:
       - VIRTUAL_HOST=${PROJECT_DOMAIN}

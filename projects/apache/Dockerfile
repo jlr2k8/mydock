@@ -3,7 +3,7 @@ FROM joshlrogers/debian
 ARG APACHE_VERSION
 ARG APR_VERSION='1.7.0'
 ARG APR_UTIL_VERSION='1.6.1'
-ARG ZLIB_VERSION='1.2.11'
+ARG ZLIB_VERSION='1.2.13'
 
 RUN wget https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz \
 	&& tar xzf zlib-${ZLIB_VERSION}.tar.gz \
@@ -52,7 +52,7 @@ RUN cd httpd-${APACHE_VERSION} \
 		--enable-proxy \
 		--enable-deflate \
 		--enable-proxy-html \
-		--with-pcre=/usr/local/pcre/bin/pcre-config \
+		--with-pcre=/usr/local/bin/pcre-config \
 		--with-included-apr \
 	&& make clean \
 	&& make \
@@ -73,7 +73,7 @@ ENV PACKAGES_DEBIAN_RM=" \
 	wget \
 	libexpat1 \
 	libexpat1-dev \
-	libpcre3-dev \
+	libpcre2-dev \
 	libtool \
 	libxml2-utils \
 	libxml2-dev \
