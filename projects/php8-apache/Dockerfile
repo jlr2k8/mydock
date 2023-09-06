@@ -5,7 +5,7 @@ ARG JPEG_VERSION='v9c'
 ARG PNG_VERSION='1.6.34'
 
 RUN apt update \
-    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev libzip-dev libzip5
+    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev libzip-dev libzip4
 
 ## LibJPEG
 RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-document /tmp/jpegsrc.${JPEG_VERSION}.tar.gz \
@@ -15,7 +15,8 @@ RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-doc
     && make clean \
     && make \
     && make install clean \
-    && cd
+    && cd \
+    && rm -rf /tmp/jpeg-9c
 
 ## LibPNG
 RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-${PNG_VERSION}.tar.gz --output-document /tmp/libpng-${PNG_VERSION}.tar.gz \
@@ -25,7 +26,8 @@ RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-${PNG_VERSIO
     && make clean \
     && make \
     && make install clean \
-    && cd
+    && cd \
+    && rm -rf /tmp/libpng-${PNG_VERSION}
 
 # PHP
 RUN echo >> /usr/local/apache2/conf/httpd.conf \
