@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: "${MYDOCK_ROOT}/projects/${PROJECT}/web"
+    volumes:
+      - "${WORKING_COPY}:/app"
+    image: node:latest
+    environment:
+      - VIRTUAL_HOST=${PROJECT_DOMAIN}
+    expose:
+      - 80
+    networks:
+      - mynet
+    container_name: "${PROJECT}-web"
+    restart: always
+    tty: true
+
+volumes:
+  data:
+
+networks:
+  mynet:
+    external: true

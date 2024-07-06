@@ -7,7 +7,7 @@ ARG REDIS_EXECUTABLE
 
 FROM joshlrogers/debian
 
-ENV REDIS_VERSION='5.0.5'
+ENV REDIS_VERSION='7.2.4'
 
 RUN wget http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz \
 	&& tar xzf redis-${REDIS_VERSION}.tar.gz \

@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bookworm
 
 ENV PACKAGES_DEBIAN=" \
     autoconf \
@@ -24,7 +24,7 @@ ENV PACKAGES_DEBIAN=" \
 "
 
 ENV PCRE_VERSION='8.45'
-ENV OPENSSL_VERSION='1.1.1m'
+ENV OPENSSL_VERSION='3.2.0'
 ENV CURL_VERSION='8.2.1'
 
 RUN apt update \
@@ -46,6 +46,7 @@ RUN wget https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz \
     && make clean \
     && make \
     && make install \
+    && ldconfig /usr/lib64 \
     && cd
 
 RUN wget https://curl.se/download/curl-${CURL_VERSION}.tar.bz2 \

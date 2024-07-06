@@ -12,7 +12,7 @@ function addHost()
     fi
 
     # Check for existing /etc/hosts entry
-    ping -w 3 "${APP_LOCAL_DOMAIN}" > /dev/null 2>&1
+    ping -c 3 "${APP_LOCAL_DOMAIN}" > /dev/null 2>&1
 
     if [[ $? != 0 ]]; then
         echo

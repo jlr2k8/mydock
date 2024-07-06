@@ -32,12 +32,14 @@ RUN    wget ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng16/libpng-${PNG_VERSIO
 # PHP
 RUN echo >> /usr/local/apache2/conf/httpd.conf \
     && echo '# LoadModule php_module /usr/local/apache2/modules/libphp.so' >> /usr/local/apache2/conf/httpd.conf \
-    && wget http://php.net/get/php-${PHP_VERSION}.tar.bz2/from/this/mirror --output-document /tmp/php-${PHP_VERSION}.tar.bz2 \
+    && wget https://www.php.net/distributions/php-${PHP_VERSION}.tar.bz2 --output-document /tmp/php-${PHP_VERSION}.tar.bz2 \
     && tar xjf /tmp/php-${PHP_VERSION}.tar.bz2 --directory /tmp \
     && cd /tmp/php-${PHP_VERSION} \
+    && export OPENSSL_LIBS="-L/usr -lssl -lcrypto -lz" \
+    && export OPENSSL_CFLAGS="-I/usr/include" \
     && ./configure \
         --with-zlib \
-        --with-gd \
+        --enable-gd \
         --enable-exif \
         --enable-mbstring \
         --with-jpeg-dir \

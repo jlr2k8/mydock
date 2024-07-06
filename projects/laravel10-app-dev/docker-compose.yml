@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: "${MYDOCK_ROOT}/projects/${PROJECT}/web"
+    volumes:
+      - "${WORKING_COPY}:/usr/local/apache2/htdocs"
+      - "${MYDOCK_ROOT}/projects/${PROJECT}/web/conf/inc/vhosts:/usr/local/apache2/conf/inc/vhosts"
+      - "${MYDOCK_ROOT}/projects/${PROJECT}/web/php.ini:/usr/local/lib/php.ini"
+      - "/tmp:/usr/local/apache2/php-sessions"
+    image: joshlrogers/php8-apache
+    environment:
+      - VIRTUAL_HOST=${PROJECT_DOMAIN}
+    expose:
+      - 80
+    networks:
+      - mynet
+    container_name: "${PROJECT}-web"
+    restart: always
+    tty: true
+
+  db:
+    build:
+      context: "${MYDOCK_ROOT}/projects/${PROJECT}/db"
+    volumes:
+      - data:/var/lib/mysql
+      - "${MYDOCK_ROOT}/projects/${PROJECT}/db/conf.d:/etc/mysql/conf.d"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    restart: always
+    privileged: true
+    networks:
+      - mynet
+    container_name: "${PROJECT}-db"
+
+volumes:
+  data:
+
+networks:
+  mynet:
+    external: true

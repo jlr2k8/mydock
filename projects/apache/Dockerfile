@@ -3,7 +3,7 @@ FROM joshlrogers/debian
 ARG APACHE_VERSION
 ARG APR_VERSION='1.7.0'
 ARG APR_UTIL_VERSION='1.6.1'
-ARG ZLIB_VERSION='1.2.13'
+ARG ZLIB_VERSION='1.3.1'
 
 RUN wget https://zlib.net/zlib-${ZLIB_VERSION}.tar.gz \
 	&& tar xzf zlib-${ZLIB_VERSION}.tar.gz \
