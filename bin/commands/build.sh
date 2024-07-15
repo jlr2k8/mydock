@@ -27,7 +27,7 @@ echo
 echo "Building ${PROJECT}"
 
 PROJECT_BUILD_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/build.sh"
-PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/docker compose.yml"
+PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/docker-compose.yml"
 
 if [[ -x "${PROJECT_BUILD_FILE}" ]]; then
     shift 1

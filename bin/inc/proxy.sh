@@ -28,7 +28,7 @@ function buildRunProxy()
     export HOST_CERT_DIR="${HOST_CERT_DIR}"
 
     docker compose \
-        --file "${MYDOCK_ROOT}/utilities/proxy/docker compose.yml" \
+        --file "${MYDOCK_ROOT}/utilities/proxy/docker-compose.yml" \
         up \
         -d \
         --force-recreate
