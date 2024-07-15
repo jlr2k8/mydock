@@ -26,10 +26,10 @@ done
 echo
 echo "Starting ${PROJECT}"
 
-PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/docker-compose.yml"
+PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/docker compose.yml"
 
 if [[ ! -e "${PROJECT_COMPOSE_FILE}" ]]; then
-    PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/custom/${PROJECT}/docker-compose.yml"
+    PROJECT_COMPOSE_FILE="${MYDOCK_ROOT}/projects/custom/${PROJECT}/docker compose.yml"
 fi
 
 PROJECT_START_FILE="${MYDOCK_ROOT}/projects/${PROJECT}/start.sh"

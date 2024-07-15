@@ -9,7 +9,7 @@ buildRunProxy
 # Add hostname
 addHost "${PROJECT_LOCAL_DOMAIN}"
 
-docker-compose \
+docker compose \
     --file "${PROJECT_COMPOSE_FILE}" \
     up \
     -d \

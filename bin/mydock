@@ -51,7 +51,7 @@ for FILE in ${MYDOCK_ROOT}/bin/inc/*.sh; do
     . "${FILE}"
 done;
 
-# Globals - exported for docker-compose
+# Globals - exported for docker compose
 export PROJECT="${PROJECT}"
 export MYDOCK_ROOT="${MYDOCK_ROOT}"
 

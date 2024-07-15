@@ -16,7 +16,7 @@ if [[ -z "${WORKING_COPY+set}" ]]; then
     setEnvItem WORKING_COPY "${WORKING_COPY}"
 fi
 
-# Set port here, if not specified in env. For web projects, this is available to set the host port in docker-compose
+# Set port here, if not specified in env. For web projects, this is available to set the host port in docker compose
 if [[ -z "${HOST_PORT+set}" ]]; then
     echo
     echo "Please provide the host port (or skip by leaving blank):"
@@ -30,7 +30,7 @@ if [[ -z "${HOST_PORT}" ]]; then
     HOST_PORT=80
 fi
 
-# Exporting for docker-compose
+# Exporting for docker compose
 export WORKING_COPY="${WORKING_COPY}"
 export PROJECT_DOMAIN="${PROJECT_DOMAIN}"
 export HOST_PORT="${HOST_PORT}"
@@ -44,12 +44,12 @@ buildRunAdminer
 # Add hostname
 addHost "${PROJECT_DOMAIN}"
 
-docker-compose \
+docker compose \
     --file "${PROJECT_COMPOSE_FILE}" \
     build \
     --pull
 
-docker-compose \
+docker compose \
     --file "${PROJECT_COMPOSE_FILE}" \
     up \
     -d \
