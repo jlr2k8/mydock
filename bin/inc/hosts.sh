@@ -11,16 +11,17 @@ function addHost()
         return 1
     fi
 
-    # Check for existing /etc/hosts entry
-    ping -c 3 "${APP_LOCAL_DOMAIN}" > /dev/null 2>&1
 
-    if [[ $? != 0 ]]; then
-        echo
-        echo "Add '${APP_LOCAL_DOMAIN}' as a host entry so it will be accessible as http://${APP_LOCAL_DOMAIN}:<port>"
-        sudo bash -c "echo \"127.0.0.1    ${APP_LOCAL_DOMAIN}\" >> /etc/hosts"
+    for i in ${APP_LOCAL_DOMAIN//,/ }; do
+      # Check for existing /etc/hosts entry
+      ping -c 3 "${i}" > /dev/null 2>&1
 
-        return $?
-    fi
+      if [[ $? != 0 ]]; then
+          echo
+          echo "Adding '${i}' as a host entry so it will be accessible as http://${i}:<port>"
+          sudo bash -c "echo \"127.0.0.1    ${i}\" >> /etc/hosts"
+      fi
+    done
 
     return 1
 }
