@@ -52,7 +52,7 @@ function setEnvItem()
         echo "Replacing existing entry for '${KEY}'..."
         echo
 
-        sed -i "s/${KEY}=.*/${KEY}='${VALUE}'/g" ${ENV}
+        sed -i "s|${KEY}=.*|${KEY}='${VALUE}'|g" ${ENV}
     fi
 
     # Refresh the runtime with the newly added env variables by sourcing again
