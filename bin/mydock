@@ -69,6 +69,13 @@ if [[ -z "${COMMAND}" ]]; then
     exit 1
 fi
 
+# Update runs across the full stack and does not require a project argument
+if [[ "${COMMAND}" = "update" ]]; then
+    shift 1
+    . "${MYDOCK_ROOT}/bin/commands/update.sh" "${@}"
+    exit $?
+fi
+
 # Check for valid sub-command
 if [[ ! -x "${MYDOCK_ROOT}/bin/commands/${COMMAND}.sh" ]]; then
     echo

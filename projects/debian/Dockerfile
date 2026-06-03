@@ -10,6 +10,7 @@ ENV PACKAGES_DEBIAN=" \
     libexpat1 \
     libexpat1-dev \
     libncurses5 \
+    libpsl-dev \
     libsasl2-modules \
     libtool \
     libxml2-dev \
@@ -21,11 +22,12 @@ ENV PACKAGES_DEBIAN=" \
     procps \
     sudo \
     wget \
+    zlib1g-dev \
 "
 
 ENV PCRE_VERSION='8.45'
-ENV OPENSSL_VERSION='3.2.0'
-ENV CURL_VERSION='8.2.1'
+ENV OPENSSL_VERSION='3.6.2'
+ENV CURL_VERSION='8.20.0'
 
 RUN apt update \
     && apt install -y ${PACKAGES_DEBIAN}

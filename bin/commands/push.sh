@@ -1,11 +1,15 @@
 #!/bin/bash
 
 if [[ -z "${DOCKER_REPO}" ]]; then
-    echo
-    echo "Please provide the docker repository name:"
-    read -p "Docker Repo: " DOCKER_REPO
+    ensureDockerRepo || exit 1
+fi
 
-    echo "DOCKER_REPO=${DOCKER_REPO}" >> ${ENV}
+if ! docker image inspect "${DOCKER_REPO}" > /dev/null 2>&1; then
+    echo
+    echo "No local image found for '${DOCKER_REPO}'."
+    echo "Build it first:  ./bin/mydock build ${PROJECT}"
+    echo
+    exit 1
 fi
 
 docker push "${DOCKER_REPO}"

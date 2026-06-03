@@ -7,6 +7,10 @@ services:
     networks:
       - mynet
     container_name: "adminer"
+    labels:
+      - "nginx-proxy.host=adminer.local"
+      - "nginx-proxy.port=8080"
+      - "nginx-proxy.ssl=false"
 
 networks:
   mynet:

@@ -1,11 +1,7 @@
 #!/bin/bash
 
 if [[ -z "${DOCKER_REPO}" ]]; then
-    echo
-    echo "Please provide the docker repository name:"
-    read -p "Docker Repo: " DOCKER_REPO
-
-    echo "DOCKER_REPO=${DOCKER_REPO}" >> ${ENV}
+    ensureDockerRepo || exit 1
 fi
 
 APACHE_VERSION=$(curl -s 'https://downloads.apache.org//httpd/CHANGES_2.4' | head -2 | tail -1 | awk {'print $4'})

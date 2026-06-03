@@ -32,7 +32,7 @@ MyDock is organized into layered components:
   The main CLI entrypoint. Validates commands and projects, loads shared runtime helpers, initializes project-scoped environment state, and dispatches lifecycle commands.
 
 - `bin/commands/`  
-  Shared lifecycle commands (`build`, `start`, `stop`, `push`) that provide a consistent interface while delegating stack-specific behavior to each project definition.
+  Shared lifecycle commands (`build`, `start`, `stop`, `push`, `update`) that provide a consistent interface while delegating stack-specific behavior to each project definition.
 
 - `bin/inc/`  
   Reusable infrastructure primitives shared across all projects, including environment persistence, reverse proxy management, hosts file updates, working copy handling, and utility services such as Adminer.
@@ -78,10 +78,10 @@ Example:
 
 ```
 apache/
-apache-php7/
-apache-php8/
+debian/
 laravel10-app-dev/
 node/
+php8-apache/
 redis/
 ```
 
@@ -108,6 +108,70 @@ redis/
 ```bash
 ./bin/mydock build laravel10-app-dev
 ```
+
+Build a base image (e.g. the debian foundation layer):
+
+```bash
+./bin/mydock build debian
+```
+
+---
+
+### Push images to Docker Hub
+
+Push a single project image (must be built locally first):
+
+```bash
+./bin/mydock push debian
+```
+
+Images default to the `joshlrogers/<project>` repository names unless overridden in `env/.<project>`.
+
+---
+
+### Update base images
+
+MyDock can check upstream package versions and rebuild base images in dependency order:
+
+```
+debian → apache → php8-apache → redis → node
+```
+
+Check for available updates without building:
+
+```bash
+./bin/mydock update --check
+```
+
+Rebuild outdated images (output streams to the console and `var/logs/`):
+
+```bash
+./bin/mydock update
+```
+
+Rebuild and push to Docker Hub:
+
+```bash
+./bin/mydock update --push
+```
+
+When debian changes, downstream images (apache, php8-apache, redis) are rebuilt automatically. Version state is tracked in `var/update-state` (gitignored).
+
+#### Automated updates (cron)
+
+For hands-off scheduled updates, use the cron wrapper:
+
+```bash
+./scripts/cron-update.sh
+```
+
+Example crontab entry (weekly, quiet, with push):
+
+```bash
+0 3 * * 0 MYDOCK_UPDATE_PUSH=1 /home/josh/mydock/scripts/cron-update.sh >> /home/josh/mydock/var/logs/cron.log 2>&1
+```
+
+Use `--quiet` (set automatically by the cron script) to log build output to files only. Omit `MYDOCK_UPDATE_PUSH` if you prefer to push manually after reviewing builds.
 
 ---
 
@@ -198,7 +262,7 @@ Project-specific implementations under `projects/custom/` are intentionally excl
 
 ---
 
-## What This Is (and Isn’t)
+## What This Is (and Isn't)
 
 **This is:**
 
@@ -272,5 +336,4 @@ MyDock is an attempt to reduce that friction by:
 
 - improved CLI ergonomics  
 - project scaffolding/templates  
-- enhanced documentation and onboarding  
 - optional service discovery improvements

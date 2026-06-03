@@ -5,7 +5,7 @@ ARG JPEG_VERSION='v9c'
 ARG PNG_VERSION='1.6.34'
 
 RUN apt update \
-    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev libzip-dev libzip4
+    && apt install -y libgd3 libgd-dev sqlite3 libsqlite3-dev libonig-dev libbz2-dev libzip-dev libzip4 pkg-config libpsl-dev
 
 ## LibJPEG
 RUN    wget http://www.ijg.org/files/jpegsrc.${JPEG_VERSION}.tar.gz --output-document /tmp/jpegsrc.${JPEG_VERSION}.tar.gz \
@@ -35,8 +35,11 @@ RUN echo >> /usr/local/apache2/conf/httpd.conf \
     && wget https://www.php.net/distributions/php-${PHP_VERSION}.tar.bz2 --output-document /tmp/php-${PHP_VERSION}.tar.bz2 \
     && tar xjf /tmp/php-${PHP_VERSION}.tar.bz2 --directory /tmp \
     && cd /tmp/php-${PHP_VERSION} \
-    && export OPENSSL_LIBS="-L/usr -lssl -lcrypto -lz" \
+    && export PKG_CONFIG_PATH="/usr/lib/pkgconfig:/usr/lib64/pkgconfig:${PKG_CONFIG_PATH}" \
+    && export OPENSSL_LIBS="-L/usr/lib -L/usr/lib64 -lssl -lcrypto -lz" \
     && export OPENSSL_CFLAGS="-I/usr/include" \
+    && export CURL_CFLAGS="-I/usr/include" \
+    && export CURL_LIBS="-L/usr/lib -L/usr/lib64 -lcurl -lssl -lcrypto -lz -lpsl" \
     && ./configure \
         --with-zlib \
         --enable-gd \

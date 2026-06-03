@@ -4,7 +4,7 @@ services:
       context: "${MYDOCK_ROOT}/projects/${PROJECT}/web"
     volumes:
       - "${WORKING_COPY}:/app"
-    image: node:latest
+    image: joshlrogers/node
     environment:
       - VIRTUAL_HOST=${PROJECT_DOMAIN}
     expose:
